@@ -1,0 +1,9 @@
+[Unit]
+Description=JBoss EAP 7.2 by Ansible Tower - PH
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/jboss-eap-7.2/bin/standalone.sh
+
+[Install]
+WantedBy=multi-user.target
