@@ -1,0 +1,6 @@
+---
+- name: Deploy JBoss EAP
+  hosts: all 
+  roles:
+    - deploy_jboss
+...

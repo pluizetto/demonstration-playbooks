@@ -1,0 +1,1 @@
+JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address={{ server_address }} -Djboss.bind.management.address={{ server_address }}"

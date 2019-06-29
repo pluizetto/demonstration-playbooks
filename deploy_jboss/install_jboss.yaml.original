@@ -1,0 +1,56 @@
+---
+- name: Deploy JBoss EAP
+  hosts: all 
+  vars:
+    - java_opts: 'JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address={{ server_address }} -Djboss.bind.management.address={{ server_address }}"'
+
+  tasks:
+    - name: allow JBoss EAP ports
+      shell: "systemctl stop firewalld ; systemctl stop firewalld ; setenforce 0 ; subscription-manager clean"
+
+    - name: Registering and attaching subscriptions
+      redhat_subscription:
+        state: present
+        username: "{{ redhat_username }}"
+        password: "{{ redhat_password }}"
+        pool_ids: 
+          - 8a85f99c69d235390169ed7add29150a
+          - 8a85f99c69d235390169ed7a937314e9
+
+    - name: enable repos
+      shell: subscription-manager repos --enable={rhel-7-server-rpms,rhel-7-server-extras-rpms}
+
+    - name: Installing Pre-requirements
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: 
+        - java-1.8.0-openjdk
+        - unzip
+    
+    - name: Unpacking Package
+      shell: "unzip {{ zip_path }} -d {{ install_path }}"
+
+    - name: Initial JBoss Config
+      template:
+        src: /root/variable.txt
+        dest: /tmp/variable.txt
+
+    - name: enable a user for administration
+      shell: "echo 'smanager=c21hbmFnZXIK' >> {{ install_path }}/standalone/configuration/application-users.properties"
+
+    - name: Set JVA_OPTS variable
+      shell: "cat /tmp/variable >> {{ install_path }}/bin/standalone.conf"
+
+    - name: Configuring JBoss EAP as a Service in Red Hat Enterprise Linux
+      shell: "echo JBOSS_HOME={{ install_path }} >> {{ install_path }}/bin/init.d/jboss-eap.conf ; echo JBOSS_USER=root >> {{ install_path }}/bin/init.d/jboss-eap.conf ; cp {{ install_path }}/bin/init.d/jboss-eap.conf /etc/default ; cp {{ install_path }}/bin/init.d/jboss-eap-rhel.sh /etc/init.d ; chmod +x /etc/init.d/jboss-eap-rhel.sh ; chkconfig --add /etc/init.d/jboss-eap-rhel.sh"
+
+    - name: Starting JBoss EAP
+      systemd:
+        name: jboss-eap-rhel 
+        state: started
+        enabled: yes
+
+    - name: Open JBoss EAP UI
+      shell: "sleep 60 ; bash /home/pluizetto/firefox.sh &"
+      delegate_to: 192.168.10.1
