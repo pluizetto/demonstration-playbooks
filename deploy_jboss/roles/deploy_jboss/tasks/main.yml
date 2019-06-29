@@ -53,10 +53,13 @@
   template:
     src: pluizetto-jboss-eap-7.2.service
     dest: /usr/lib/systemd/system/pluizetto-jboss-eap-7.2.service
-    
-- name: Starting JBoss EAP
+
+- name: Reload list of Daemons
+  shell: systemctl daemon-reload
+  
+- name: Starting pluizetto-jboss-eap-7.2.service
   systemd:
-    name: jboss-eap-rhel
+    name: pluizetto-jboss-eap-7.2.service
     state: started
     enabled: yes
 
