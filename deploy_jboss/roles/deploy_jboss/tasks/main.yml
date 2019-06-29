@@ -33,7 +33,7 @@
     - variable.txt
 
 - name: enable a user for administration
-  shell: "echo 'smanager=c21hbmFnZXIK' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/application-users.properties"
+  shell: "echo 'smanager=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
 
 - name: Set JVA_OPTS variable
   shell: "cat /tmp/variable.txt >> {{ install_path }}/jboss-eap-7.2/bin/standalone.conf"
