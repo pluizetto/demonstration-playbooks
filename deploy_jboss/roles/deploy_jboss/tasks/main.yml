@@ -35,7 +35,7 @@
 - name: Configurating server address
   template:
     src: standalone.xml
-    dest: {{ install_path }}/jboss-eap-7.2/standalone/configuration/standalone.xml
+    dest: "{{ install_path }}/jboss-eap-7.2/standalone/configuration/standalone.xml"
 
 - name: enable a user for administration
   shell: "echo 'smanager=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
