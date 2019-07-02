@@ -37,8 +37,9 @@
     src: standalone.xml
     dest: "{{ install_path }}/jboss-eap-7.2/standalone/configuration/standalone.xml"
 
-- name: enable a user for administration
-  shell: "echo 'teste=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
+- name: Creating a user for administration
+  #shell: "echo 'teste=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
+  shell: "{{ install_path }}/bin/add-user.sh -s -r ManagementRealm -u {{ jboss_eap_admin_user }} -p {{ jboss_eap_admin_password }}"
 
 - name: Set JVA_OPTS variable
   shell: "cat /tmp/variable.txt >> {{ install_path }}/jboss-eap-7.2/bin/standalone.conf"
@@ -46,26 +47,21 @@
 - name: Configuring JBoss EAP as a Service in Red Hat Enterprise Linux
   shell: "echo JBOSS_HOME={{ install_path }} >> {{ install_path }}/jboss-eap-7.2/bin/init.d/jboss-eap.conf ; echo JBOSS_USER=root >> {{ install_path }}/jboss-eap-7.2/bin/init.d/jboss-eap.conf ; cp {{ install_path }}/jboss-eap-7.2/bin/init.d/jboss-eap.conf /etc/default ; cp {{ install_path }}/jboss-eap-7.2/bin/init.d/jboss-eap-rhel.sh /etc/init.d ; chmod +x /etc/init.d/jboss-eap-rhel.sh ; chkconfig --add /etc/init.d/jboss-eap-rhel.sh"
 
-- name: Creating JBoss EAP Daemon
+- name: Configurating directories for JBoss EAP Service 
   shell: "ln -s /opt/jboss-eap-7.2 /usr/bin/jboss-eap-7.2"
 
 - name: Configurating JBoss EAP as a Service
   template:
     src: pluizetto-jboss-eap-7.2.service
-    dest: /usr/lib/systemd/system/pluizetto-jboss-eap-7.2.service
+    dest: /usr/lib/systemd/system/jboss-eap-7.2.service
 
-- name: Reload list of Daemons
-  shell: systemctl daemon-reload
-  
-- name: Enable pluizetto-jboss-eap-7.2.service
+- name: Enable jboss-eap-7.2.service (at boot time)
   systemd:
-    name: pluizetto-jboss-eap-7.2.service
-    state: stopped
+    name: jboss-eap-7.2.service
+    state: stopped 
+    daemon_reload: yes
     enabled: yes
 
 - name: Starting JBoss EAP
-  shell: init 6
-  
-- pause:
-   minutes: 1
+  shell: "chkconfig jboss-eap-rhel.sh on ; service jboss-eap-rhel start"
 ...
