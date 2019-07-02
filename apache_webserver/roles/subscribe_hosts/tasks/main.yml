@@ -1,4 +1,7 @@
 ---
+- name: clean registers
+  shell: subscription-manager clean
+
 - name: Registering and attaching subscriptions
   redhat_subscription:
     state: present
