@@ -11,6 +11,7 @@
   firewalld:
     service: "{{ item }}"
     permanent: true
+    immediate: yes
     state: enabled
   loop:
     - http
