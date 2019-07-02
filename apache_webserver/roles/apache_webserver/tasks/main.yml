@@ -1,0 +1,35 @@
+---
+- name: Install Apache Webserver
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - "@webserver"
+    - policycoreutils-python-utils
+
+- name: Configurating Firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop:
+    - http
+    - https
+
+- name: configure apache page
+  template:
+    src: index.html.template
+    dest: /var/www/html/index.html
+
+- name: configure SELinux
+  shell: restorecon -R /var/www/
+
+- name: Start Apache Webserver
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+
+- debug:
+    msg: Please, access http://192.168.10.201 ;D
+...
