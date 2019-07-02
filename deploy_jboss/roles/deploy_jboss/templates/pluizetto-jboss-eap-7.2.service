@@ -1,9 +1,13 @@
 [Unit]
-Description=JBoss EAP 7.2 by Ansible Tower - PH
+Description=JBoss EAP Service
+After=network.target
+StartLimitIntervalSec=0
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/jboss-eap-7.2/bin/standalone.sh
-
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/opt/jboss-eap-7.2/bin/standalone.sh
 [Install]
 WantedBy=multi-user.target
