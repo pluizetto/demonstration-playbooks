@@ -5,7 +5,7 @@
     state: latest
   loop:
     - "@webserver"
-    - policycoreutils-python-utils
+    - policycoreutils-python 
 
 - name: Configurating Firewall
   firewalld:
