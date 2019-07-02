@@ -22,12 +22,12 @@
     dest: /var/www/html/index.html
 
 - name: configure SELinux
-  shell: restorecon -R /var/www/
+  shell: 'restorecon -R /var/www/'
 
 - name: Start Apache Webserver
   systemd:
     name: httpd
-    state: started
+    state: restarted 
     enabled: yes
 
 - debug:
