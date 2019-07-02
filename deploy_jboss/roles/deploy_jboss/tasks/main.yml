@@ -1,6 +1,6 @@
 ---
 - name: allow JBoss EAP ports
-  shell: "systemctl stop firewalld ; systemctl stop firewalld ; setenforce 0 ; subscription-manager clean"
+  shell: "systemctl stop firewalld ; systemctl stop firewalld ; systemctl disable firewalld ; setenforce 0 ; subscription-manager clean"
 
 - name: Registering and attaching subscriptions
   redhat_subscription:
@@ -35,7 +35,7 @@
 - name: Configurating server address
   template:
     src: standalone.xml
-    dest: {{ install_path }}/jboss-eap-7.2/standalone/configuration/standalone.xml
+    dest: "{{ install_path }}/jboss-eap-7.2/standalone/configuration/standalone.xml"
 
 - name: enable a user for administration
   shell: "echo 'smanager=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
@@ -57,11 +57,17 @@
 - name: Reload list of Daemons
   shell: systemctl daemon-reload
   
-- name: Starting pluizetto-jboss-eap-7.2.service
+- name: Enable pluizetto-jboss-eap-7.2.service
   systemd:
     name: pluizetto-jboss-eap-7.2.service
-    state: started
+    state: stopped
     enabled: yes
+
+- name: Starting JBoss EAP
+  shell: init 6
+  
+- pause:
+   minutes: 1
 
 - name: Open JBoss EAP UI
   shell: "sleep 60 ; bash /home/pluizetto/firefox.sh &"
