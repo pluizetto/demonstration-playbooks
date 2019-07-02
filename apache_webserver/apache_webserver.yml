@@ -4,5 +4,6 @@
   become: yes
   gather_facts: yes
   roles:
+    - subscribe_hosts
     - apache_webserver
 ...
