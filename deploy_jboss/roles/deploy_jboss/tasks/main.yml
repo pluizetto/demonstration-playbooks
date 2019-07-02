@@ -39,7 +39,7 @@
 
 - name: Creating a user for administration
   #shell: "echo 'teste=de8f0550922a4d6aa2682ba8d8e4d35b' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-users.properties ; echo 'smanager=' >> {{ install_path }}/jboss-eap-7.2/standalone/configuration/mgmt-groups.properties"
-  shell: "{{ install_path }}/bin/add-user.sh -s -r ManagementRealm -u {{ jboss_eap_admin_user }} -p {{ jboss_eap_admin_password }}"
+  shell: "{{ install_path }}/jboss-eap-7.2/bin/add-user.sh -s -r ManagementRealm -u {{ jboss_eap_admin_user }} -p {{ jboss_eap_admin_password }}"
 
 - name: Set JVA_OPTS variable
   shell: "cat /tmp/variable.txt >> {{ install_path }}/jboss-eap-7.2/bin/standalone.conf"
