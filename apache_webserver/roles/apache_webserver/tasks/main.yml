@@ -31,5 +31,5 @@
     enabled: yes
 
 - debug:
-    msg: Please, access http://192.168.10.201 ;D
+    msg: Please, access http://192.168.10.74 ;D
 ...
