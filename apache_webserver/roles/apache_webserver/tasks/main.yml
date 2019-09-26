@@ -4,7 +4,7 @@
     name: "{{ item }}"
     state: latest
   loop:
-    - "@webserver"
+    - httpd
     - policycoreutils-python 
 
 - name: Configurating Firewall
