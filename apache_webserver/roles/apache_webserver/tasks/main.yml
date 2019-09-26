@@ -5,8 +5,7 @@
     state: latest
   loop:
     - httpd
-    - policycoreutils-python 
-
+    
 - name: Configurating Firewall
   firewalld:
     service: "{{ item }}"
