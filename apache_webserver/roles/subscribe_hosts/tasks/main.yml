@@ -8,8 +8,8 @@
     username: "{{ redhat_username }}"
     password: "{{ redhat_password }}"
     pool_ids:
-      - 8a85f99c69d235390169ed7adc1414f1
+      - 8a85f99c69d235390169ed7adc1414f1 
 
 - name: enable repos
-  shell: subscription-manager repos --enable={rhel-8-for-x86_64-appstream-rpms,rhel-8-for-x86_64-baseos-rpms}
+  shell: subscription-manager repos --enable={rhel-7-server-rpms}
 ...
