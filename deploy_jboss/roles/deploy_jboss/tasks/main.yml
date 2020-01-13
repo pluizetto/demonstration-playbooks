@@ -1,4 +1,6 @@
 ---
+
+# tasks 
 - name: allow JBoss EAP ports
   shell: "systemctl stop firewalld ; systemctl stop firewalld ; systemctl disable firewalld ; setenforce 0 ; subscription-manager clean"
 
