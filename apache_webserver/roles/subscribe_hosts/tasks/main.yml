@@ -2,7 +2,7 @@
 - name: copy tzdata
   copy:
     src: /root/tzdata-2019c-1.el7.noarch.rpm
-    dest: /root/tzdata-2019c-1.el7.noarch.rpm
+    dest: /root/
     
 - name: update tzdata
   yum:
