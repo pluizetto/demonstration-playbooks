@@ -1,14 +1,4 @@
----
-- name: copy tzdata
-  copy:
-    src: /tmp/tzdata-2019c-1.el7.noarch.rpm
-    dest: /root/
-    
-- name: update tzdata
-  yum:
-    name: /root/tzdata-2019c-1.el7.noarch.rpm
-    state: latest
-    
+--- 
 - name: clean registers
   shell: subscription-manager clean
 
