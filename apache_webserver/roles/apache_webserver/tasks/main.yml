@@ -6,7 +6,7 @@
   loop:
     - httpd
     
-- name: Configurating Firewall
+- name: Configurating Firewalld
   firewalld:
     service: "{{ item }}"
     permanent: true
@@ -31,5 +31,5 @@
     enabled: yes
 
 - debug:
-    msg: Please, access http://{{ ansible_default_ipv4.address }} ;D
+    msg: Please, access http://192.168.10.201 ;D
 ...
