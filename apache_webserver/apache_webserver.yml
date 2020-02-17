@@ -1,4 +1,12 @@
 ---
+- name: rollback snapshot vm01
+  command: virsh snapshot-revert --snapshotname 000 --domain target01
+  delegate_to: 192.168.10.1
+  
+- name: rollback snapshot vm01
+  command: virsh snapshot-revert --snapshotname 001 --domain target02
+  delegate_to: 192.168.10.1
+  
 - name: Deploy Apache Webserver
   hosts: all
   become: yes
