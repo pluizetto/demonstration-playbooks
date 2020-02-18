@@ -20,4 +20,7 @@
 
 - name: enable repos
   shell: subscription-manager repos --enable=rhel-7-server-rpms
+
+- name: repolist
+  shell: yum repolist
 ...
