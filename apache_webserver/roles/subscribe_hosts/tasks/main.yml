@@ -16,7 +16,7 @@
     username: "{{ redhat_username }}"
     password: "{{ redhat_password }}"
     pool_ids:
-      - 8a85f99c69d235390169ed7add29150a 
+      - 8a85f999710f3aea01714e02cf976360 
 
 - name: enable repos
   shell: subscription-manager repos --enable=rhel-7-server-rpms
