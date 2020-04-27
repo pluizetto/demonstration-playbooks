@@ -30,6 +30,11 @@
 - name: update hour
   shell: 'timedatectl set-timezone America/Sao_Paulo ; date'
 
+- name: start chronyd
+  systemd:
+    name: chronyd.service
+    state: restarted
+
 - name: clean registers
   shell: subscription-manager clean
 
