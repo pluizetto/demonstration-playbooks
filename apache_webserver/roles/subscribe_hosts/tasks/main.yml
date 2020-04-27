@@ -17,8 +17,18 @@
     src: files/libseccomp-2.3.1-4.el7.x86_64.rpm
     dest: /root/libseccomp-2.3.1-4.el7.x86_64.rpm
 
-- name: install packages NTP
-  shell: 'cd /root ; yum localinstall -y libseccomp-2.3.1-4.el7.x86_64.rpm ; cd /root ; yum localinstall -y chrony-3.4-1.el7.x86_64.rpmi ; timedatectl set-timezone America/Sao_Paulo' 
+- name: install lib for ntp
+  yum:
+    name: /root/libseccomp-2.3.1-4.el7.x86_64.rpm
+    state: present
+
+- name: install Chrony 
+  yum:
+    name: /root/chrony-3.4-1.el7.x86_64.rpm 
+    state: present
+
+- name: update hour
+  shell: 'timedatectl set-timezone America/Sao_Paulo ; date'
 
 - name: clean registers
   shell: subscription-manager clean
