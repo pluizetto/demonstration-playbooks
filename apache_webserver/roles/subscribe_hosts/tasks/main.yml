@@ -6,7 +6,20 @@
 - name: rollback snapshot vm02
   command: 'virsh snapshot-revert --snapshotname 001 --domain target02'
   delegate_to: 192.168.10.1
-  
+
+- name: copy NTP packages
+  copy:
+    src: files/chrony-3.4-1.el7.x86_64.rpm
+    dest: /root/chrony-3.4-1.el7.x86_64.rpm
+
+- name: copy Lib packages
+  copy:
+    src: files/libseccomp-2.3.1-4.el7.x86_64.rpm
+    dest: /root/libseccomp-2.3.1-4.el7.x86_64.rpm
+
+- name: install packages NTP
+  shell: 'yum localinstall -y /root/libseccomp-2.3.1-4.el7.x86_64.rpm ; yum localinstall -y /root/chrony-3.4-1.el7.x86_64.rpmi ; timedatectl set-timezone America/Sao_Paulo' 
+
 - name: clean registers
   shell: subscription-manager clean
 
